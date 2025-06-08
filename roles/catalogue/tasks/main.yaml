@@ -1,0 +1,35 @@
+
+- name: app setup
+  include_roles:
+    name: common
+    tasks_from: app-setup
+- name: nodejs setup
+  include_roles:
+    name: common
+    tasks_from: nodejs
+
+
+- name: Setting up mongodb repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+- name: Installing mongodb client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+- name: checking if data is already loaded
+  ansible.builtin.command: mongosh --host mongodb.vkdevops.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+  register: command_result
+
+- name: Load data
+  ansible.builtin.shell: mongosh --host mongodb.vkdevops.site < /app/db/master-data.js
+  when: command_result.stdout | int < 0
+
+- name: systemd setup
+  include_roles:
+    name: common
+    tasks_from: systemd
+
+
+
+
