@@ -1,10 +1,10 @@
 
 - name: app setup
-  include_roles:
+  include_role:
     name: common
     tasks_from: app-setup
 - name: nodejs setup
-  include_roles:
+  include_role:
     name: common
     tasks_from: nodejs
 
@@ -26,7 +26,7 @@
   when: command_result.stdout | int < 0
 
 - name: systemd setup
-  include_roles:
+  include_role:
     name: common
     tasks_from: systemd
 
