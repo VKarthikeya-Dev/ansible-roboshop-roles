@@ -1,6 +1,6 @@
 - name: Installing maven 
   ansible.builtin.dnf:
-    name: {{ item }}      
+    name: "{{ item }}"  
     state: present
   loop:
   - maven
@@ -8,7 +8,7 @@
 
 - name: Installing Python Packages
   ansible.builtin.pip:
-    name: {{ item }}
+    name: "{{ item }}"
     executable: pip3.9
   loop:
   - cryptography
