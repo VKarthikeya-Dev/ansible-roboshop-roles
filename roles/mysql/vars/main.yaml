@@ -1,0 +1,1 @@
+mysql_password: "lookup('amzon.aws.ssm_parameter'.'/roboshop/mysql/mysql_password', 'us-east-1', decrypt=True)"
